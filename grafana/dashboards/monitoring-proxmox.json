@@ -1,0 +1,2393 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "description": "Monitoring temps réel du nœud Proxmox (proxmox-alex-01) — \nCPU, RAM, disque, réseau, VMs et conteneurs LXC. \nDonnées collectées via Proxmox Metric Server → InfluxDB 2.x.",
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 9,
+  "links": [],
+  "panels": [
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 2,
+      "panels": [],
+      "title": "🖥️ Nœud Proxmox",
+      "type": "row"
+    },
+    {
+      "description": "Informations système statiques du nœud physique Proxmox : matériel, version du noyau, stockage",
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 20,
+        "w": 8,
+        "x": 0,
+        "y": 1
+      },
+      "id": 1,
+      "links": [
+        {
+          "targetBlank": true,
+          "title": "Go Proxmox",
+          "url": "http://192.168.1.210:8006/"
+        }
+      ],
+      "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
+        "content": "<div style=\"padding:15px; font-family: monospace; font-size:13px;\">\n  <h2 style=\"color:#00d4ff; margin-bottom:15px;\">🖥️ proxmox-alex-01</h2>\n  <table style=\"width:100%; border-collapse:collapse;\">\n    <tr style=\"border-bottom:1px solid #333;\">\n      <td style=\"padding:6px; color:#aaa;\">🔲 Processeur</td>\n      <td style=\"padding:6px;\">4 x Intel Core i3-9100T @ 3.10GHz</td>\n    </tr>\n    <tr style=\"border-bottom:1px solid #333;\">\n      <td style=\"padding:6px; color:#aaa;\">🧮 Cœurs CPU</td>\n      <td style=\"padding:6px;\">4 cœurs physiques</td>\n    </tr>\n    <tr style=\"border-bottom:1px solid #333;\">\n      <td style=\"padding:6px; color:#aaa;\">🐧 Noyau</td>\n      <td style=\"padding:6px;\">Linux 6.14.8-2-pve</td>\n    </tr>\n    <tr style=\"border-bottom:1px solid #333;\">\n      <td style=\"padding:6px; color:#aaa;\">🔑 Amorçage</td>\n      <td style=\"padding:6px;\">EFI Secure Boot</td>\n    </tr>\n    <tr style=\"border-bottom:1px solid #333;\">\n      <td style=\"padding:6px; color:#aaa;\">📦 PVE Manager</td>\n      <td style=\"padding:6px;\">9.0.3</td>\n    </tr>\n    <tr style=\"border-bottom:1px solid #333;\">\n      <td style=\"padding:6px; color:#aaa;\">💾 RAM Total</td>\n      <td style=\"padding:6px;\">15.43 Go</td>\n    </tr>\n    <tr style=\"border-bottom:1px solid #333;\">\n      <td style=\"padding:6px; color:#aaa;\">💿 Disque NVMe</td>\n      <td style=\"padding:6px;\">128 Go — Système Proxmox</td>\n    </tr>\n    <tr style=\"border-bottom:1px solid #333;\">\n      <td style=\"padding:6px; color:#aaa;\">💿 Disque SATA</td>\n      <td style=\"padding:6px; color:#ff9900;\">⚠️ 128 Go — 85% usure — VMs & LXC</td>\n    </tr>\n    <tr style=\"border-bottom:1px solid #333;\">\n      <td style=\"padding:6px; color:#aaa;\">🔌 Disque USB</td>\n      <td style=\"padding:6px;\">500 Go — Base de données InfluxDB</td>\n    </tr>\n    <tr>\n      <td colspan=\"2\" style=\"padding:10px 6px 4px 6px; color:#00d4ff; font-weight:bold;\">🚀 Machines Virtuelles & Conteneurs</td>\n    </tr>\n    <tr style=\"border-bottom:1px solid #333;\">\n      <td style=\"padding:6px; color:#aaa;\">🌐 vm-wordpress</td>\n      <td style=\"padding:6px;\">Serveur web — Site WordPress accessible sur le réseau local — vmid 100 — 2 vCPU / 2 Go RAM</td>\n    </tr>\n    <tr style=\"border-bottom:1px solid #333;\">\n      <td style=\"padding:6px; color:#aaa;\">📊 influxdb-grafana</td>\n      <td style=\"padding:6px;\">Collecte & visualisation des métriques — InfluxDB 2.x + Grafana — vmid 101 — 2 vCPU / 1 Go RAM</td>\n    </tr>\n    <tr>\n      <td style=\"padding:6px; color:#aaa;\">🔒 wireguard</td>\n      <td style=\"padding:6px;\">VPN sécurisé — Accès distant au réseau local — vmid 102 — 1 vCPU / 512 Mo RAM</td>\n    </tr>\n  </table>\n</div>",
+        "mode": "html"
+      },
+      "pluginVersion": "11.6.0",
+      "title": "Machine — proxmox-alex-01",
+      "type": "text"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "afno7qp4hokqoa"
+      },
+      "description": "Utilisation du processeur du nœud Proxmox en temps réel",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 1,
+          "mappings": [],
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "#EAB839",
+                "value": 60
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 8,
+        "y": 1
+      },
+      "id": 3,
+      "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto"
+      },
+      "pluginVersion": "11.6.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "afno7qp4hokqoa"
+          },
+          "query": "from(bucket: \"Proxmox\")\r\n  |> range(start: -5m)\r\n  |> filter(fn: (r) => r._measurement == \"cpustat\")\r\n  |> filter(fn: (r) => r._field == \"cpu\")\r\n  |> filter(fn: (r) => r[\"host\"] == \"proxmox-alex-01\")\r\n  |> filter(fn: (r) => r[\"object\"] == \"nodes\")\r\n  |> last()\r\n  |> map(fn: (r) => ({r with _value: r._value * 100.0}))",
+          "refId": "A"
+        }
+      ],
+      "title": " CPU",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "afno7qp4hokqoa"
+      },
+      "description": "Utilisation de la mémoire vive du nœud Proxmox en temps réel",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 1,
+          "mappings": [],
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "#EAB839",
+                "value": 70
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 12,
+        "y": 1
+      },
+      "id": 4,
+      "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto"
+      },
+      "pluginVersion": "11.6.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "afno7qp4hokqoa"
+          },
+          "query": "from(bucket: \"Proxmox\")\r\n  |> range(start: -5m)\r\n  |> filter(fn: (r) => r._measurement == \"memory\")\r\n  |> filter(fn: (r) => r._field == \"memused\" or r._field == \"memtotal\")\r\n  |> filter(fn: (r) => r[\"host\"] == \"proxmox-alex-01\")\r\n  |> filter(fn: (r) => r[\"object\"] == \"nodes\")\r\n  |> last()\r\n  |> pivot(rowKey: [\"_time\"], columnKey: [\"_field\"], valueColumn: \"_value\")\r\n  |> map(fn: (r) => ({_value: r.memused / r.memtotal * 100.0}))",
+          "refId": "A"
+        }
+      ],
+      "title": "🧠 RAM",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "ffnkjhfs5n8jkd"
+      },
+      "description": "Utilisation de la partition racine Proxmox",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "#EAB839",
+                "value": 70
+              },
+              {
+                "color": "red",
+                "value": 85.0001
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 16,
+        "y": 1
+      },
+      "id": 6,
+      "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto"
+      },
+      "pluginVersion": "11.6.0",
+      "targets": [
+        {
+          "query": "from(bucket: \"Proxmox\")\r\n  |> range(start: -5m)\r\n  |> filter(fn: (r) => r._measurement == \"disk\")\r\n  |> filter(fn: (r) => r._field == \"used_percent\")\r\n  |> filter(fn: (r) => r[\"host\"] == \"proxmox-alex-01\")\r\n  |> filter(fn: (r) => r[\"label\"] == \"pve-root\")\r\n  |> last()",
+          "refId": "A"
+        }
+      ],
+      "title": "💾 Disque - label=\"pve-root\"",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "ffnkjhfs5n8jkd"
+      },
+      "description": "Temps de fonctionnement du nœud depuis le dernier démarrage\n🔴 Le serveur vient de redémarrer, moins d'1 heure\n🟠 En ligne depuis 1h, encore récent\n🟢 En ligne depuis 7 jours, serveur stable",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "dark-blue",
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-red"
+              },
+              {
+                "color": "dark-orange",
+                "value": 3600
+              },
+              {
+                "color": "dark-blue",
+                "value": 604800
+              }
+            ]
+          },
+          "unit": "dtdhms"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 20,
+        "y": 1
+      },
+      "id": 5,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.6.0",
+      "targets": [
+        {
+          "query": "from(bucket: \"Proxmox\")\r\n  |> range(start: -5m)\r\n  |> filter(fn: (r) => r._measurement == \"system\")\r\n  |> filter(fn: (r) => r._field == \"uptime\")\r\n  |> filter(fn: (r) => r[\"host\"] == \"proxmox-alex-01\")\r\n  |> filter(fn: (r) => r[\"object\"] == \"nodes\")\r\n  |> last()",
+          "refId": "A"
+        }
+      ],
+      "title": "⏱️ Uptime",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "ffnkjhfs5n8jkd"
+      },
+      "description": "Temps CPU en attente des disques — élevé = disques saturés",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 2,
+          "mappings": [],
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "#EAB839",
+                "value": 10
+              },
+              {
+                "color": "red",
+                "value": 25
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 4,
+        "x": 20,
+        "y": 5
+      },
+      "id": 19,
+      "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto"
+      },
+      "pluginVersion": "11.6.0",
+      "targets": [
+        {
+          "query": "from(bucket: \"Proxmox\")\r\n  |> range(start: -5m)\r\n  |> filter(fn: (r) => r._measurement == \"cpustat\")\r\n  |> filter(fn: (r) => r._field == \"wait\")\r\n  |> filter(fn: (r) => r[\"host\"] == \"proxmox-alex-01\")\r\n  |> filter(fn: (r) => r[\"object\"] == \"nodes\")\r\n  |> last()\r\n  |> map(fn: (r) => ({r with _value: r._value * 100.0}))",
+          "refId": "A"
+        }
+      ],
+      "title": "⏳ I/O Wait",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "ffnkjhfs5n8jkd"
+      },
+      "description": "Pourcentage de vCPUs alloués aux VMs et conteneurs LXC par rapport aux cœurs physiques disponibles\n\nLe CPU est sur-alloué — c'est du over-provisioning.\n\nCe n'est pas forcément un problème car :\n\nLes VMs n'utilisent jamais leurs vCPUs à 100% en même temps\nProxmox gère le partage dynamiquement\nTon CPU réel tourne à seulement 1.2% !",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 1,
+          "mappings": [],
+          "max": 200,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "#EAB839",
+                "value": 100
+              },
+              {
+                "color": "red",
+                "value": 150
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 8,
+        "y": 7
+      },
+      "id": 16,
+      "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto"
+      },
+      "pluginVersion": "11.6.0",
+      "targets": [
+        {
+          "query": "from(bucket: \"Proxmox\")\r\n  |> range(start: -5m)\r\n  |> filter(fn: (r) => r._measurement == \"system\")\r\n  |> filter(fn: (r) => r[\"object\"] == \"qemu\" or r[\"object\"] == \"lxc\")\r\n  |> filter(fn: (r) => r[\"nodename\"] == \"proxmox-alex-01\")\r\n  |> filter(fn: (r) => r._field == \"cpus\")\r\n  |> last()\r\n  |> group()\r\n  |> sum()\r\n  |> map(fn: (r) => ({r with _value: r._value / 4.0 * 100.0}))",
+          "refId": "A"
+        }
+      ],
+      "title": "🧮 CPU alloué",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "ffnkjhfs5n8jkd"
+      },
+      "description": "Pourcentage de RAM physique allouée aux VMs et conteneurs LXC — indique si le nœud peut accueillir de nouvelles machines RAS < 70%",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 1,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "#EAB839",
+                "value": 70
+              },
+              {
+                "color": "red",
+                "value": 85
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 12,
+        "y": 7
+      },
+      "id": 15,
+      "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto"
+      },
+      "pluginVersion": "11.6.0",
+      "targets": [
+        {
+          "query": "from(bucket: \"Proxmox\")\r\n  |> range(start: -5m)\r\n  |> filter(fn: (r) => r._measurement == \"system\")\r\n  |> filter(fn: (r) => r[\"object\"] == \"qemu\" or r[\"object\"] == \"lxc\")\r\n  |> filter(fn: (r) => r[\"nodename\"] == \"proxmox-alex-01\")\r\n  |> filter(fn: (r) => r._field == \"maxmem\")\r\n  |> last()\r\n  |> group()\r\n  |> sum()\r\n  |> map(fn: (r) => ({r with _value: r._value / 16567066624.0 * 100.0}))\r\n  ",
+          "refId": "A"
+        }
+      ],
+      "title": "🧠 RAM allouée",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "ffnkjhfs5n8jkd"
+      },
+      "description": "Pourcentage du pool local-lvm alloué aux VMs et conteneurs LXC",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "#EAB839",
+                "value": 70
+              },
+              {
+                "color": "red",
+                "value": 85
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 16,
+        "y": 7
+      },
+      "id": 17,
+      "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto"
+      },
+      "pluginVersion": "11.6.0",
+      "targets": [
+        {
+          "query": "from(bucket: \"Proxmox\")\r\n  |> range(start: -5m)\r\n  |> filter(fn: (r) => r._measurement == \"system\")\r\n  |> filter(fn: (r) => r[\"object\"] == \"qemu\" or r[\"object\"] == \"lxc\")\r\n  |> filter(fn: (r) => r[\"nodename\"] == \"proxmox-alex-01\")\r\n  |> filter(fn: (r) => r._field == \"maxdisk\")\r\n  |> last()\r\n  |> group()\r\n  |> sum()\r\n  |> map(fn: (r) => ({r with _value: r._value / 202125500416.0 * 100.0}))",
+          "refId": "A"
+        }
+      ],
+      "title": "💾 Disque alloué",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "ffnkjhfs5n8jkd"
+      },
+      "description": "Nombre de cœurs physiques du nœud Proxmox",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "dark-blue",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 4,
+        "x": 20,
+        "y": 10
+      },
+      "id": 18,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.6.0",
+      "targets": [
+        {
+          "query": "from(bucket: \"Proxmox\")\r\n  |> range(start: -5m)\r\n  |> filter(fn: (r) => r._measurement == \"cpustat\")\r\n  |> filter(fn: (r) => r._field == \"cpus\")\r\n  |> filter(fn: (r) => r[\"host\"] == \"proxmox-alex-01\")\r\n  |> filter(fn: (r) => r[\"object\"] == \"nodes\")\r\n  |> last()",
+          "refId": "A"
+        }
+      ],
+      "title": "🧮 # Cœurs CPU",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "ffnkjhfs5n8jkd"
+      },
+      "description": "Vue globale CPU, RAM et I/O Wait — indicateurs clés de la santé du serveur",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "smooth",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "displayName": "${__field.name}",
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "_value"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "ram"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 16,
+        "x": 8,
+        "y": 13
+      },
+      "id": 21,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.6.0",
+      "targets": [
+        {
+          "query": "from(bucket: \"Proxmox\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"cpustat\")\r\n  |> filter(fn: (r) => r._field == \"cpu\" or r._field == \"wait\")\r\n  |> filter(fn: (r) => r[\"host\"] == \"proxmox-alex-01\")\r\n  |> filter(fn: (r) => r[\"object\"] == \"nodes\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> map(fn: (r) => ({r with _value: r._value * 100.0}))\r\n  |> drop(columns: [\"host\", \"object\", \"nodename\", \"_measurement\"])",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "ffnkjhfs5n8jkd"
+          },
+          "hide": false,
+          "query": "from(bucket: \"Proxmox\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"memory\")\r\n  |> filter(fn: (r) => r._field == \"memused\" or r._field == \"memtotal\")\r\n  |> filter(fn: (r) => r[\"host\"] == \"proxmox-alex-01\")\r\n  |> filter(fn: (r) => r[\"object\"] == \"nodes\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> pivot(rowKey: [\"_time\"], columnKey: [\"_field\"], valueColumn: \"_value\")\r\n  |> map(fn: (r) => ({_time: r._time, _value: r.memused / r.memtotal * 100.0, _field: \"ram\"}))",
+          "refId": "B"
+        }
+      ],
+      "title": "❤️ Santé du nœud",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "ffnkjhfs5n8jkd"
+      },
+      "description": "Charge moyenne du système sur 1, 5 et 15 minutes — la ligne rouge à 4 représente le nombre de cœurs physiques, au-delà le nœud est sous pression",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "smooth",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "line"
+            }
+          },
+          "mappings": [],
+          "max": 4,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "dark-red",
+                "value": 4
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 15,
+        "x": 0,
+        "y": 21
+      },
+      "id": 22,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.6.0",
+      "targets": [
+        {
+          "query": "from(bucket: \"Proxmox\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"cpustat\")\r\n  |> filter(fn: (r) => r._field == \"avg1\" or r._field == \"avg5\" or r._field == \"avg15\")\r\n  |> filter(fn: (r) => r[\"host\"] == \"proxmox-alex-01\")\r\n  |> filter(fn: (r) => r[\"object\"] == \"nodes\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> drop(columns: [\"host\", \"object\", \"nodename\", \"name\", \"_measurement\"])",
+          "refId": "A"
+        }
+      ],
+      "title": "📊 Load Average",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "ffnkjhfs5n8jkd"
+      },
+      "description": "Charge moyenne du système sur la dernière minute — reflet immédiat de l'activité en cours",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 1,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "#EAB839",
+                "value": 2
+              },
+              {
+                "color": "red",
+                "value": 4
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 3,
+        "x": 15,
+        "y": 21
+      },
+      "id": 23,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.6.0",
+      "targets": [
+        {
+          "query": "from(bucket: \"Proxmox\")\r\n  |> range(start: -30m)\r\n  |> filter(fn: (r) => r._measurement == \"cpustat\")\r\n  |> filter(fn: (r) => r._field == \"avg1\")\r\n  |> filter(fn: (r) => r[\"host\"] == \"proxmox-alex-01\")\r\n  |> filter(fn: (r) => r[\"object\"] == \"nodes\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)",
+          "refId": "A"
+        }
+      ],
+      "title": "⚡ Load 1 min",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "ffnkjhfs5n8jkd"
+      },
+      "description": "Charge moyenne sur les 5 dernières minutes — indique une tendance de charge à court terme",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 1,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "#EAB839",
+                "value": 2
+              },
+              {
+                "color": "red",
+                "value": 4
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 3,
+        "x": 18,
+        "y": 21
+      },
+      "id": 24,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.6.0",
+      "targets": [
+        {
+          "query": "from(bucket: \"Proxmox\")\r\n  |> range(start: -30m)\r\n  |> filter(fn: (r) => r._measurement == \"cpustat\")\r\n  |> filter(fn: (r) => r._field == \"avg5\")\r\n  |> filter(fn: (r) => r[\"host\"] == \"proxmox-alex-01\")\r\n  |> filter(fn: (r) => r[\"object\"] == \"nodes\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)",
+          "refId": "A"
+        }
+      ],
+      "title": "📊 Load 5 min",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "ffnkjhfs5n8jkd"
+      },
+      "description": "Charge moyenne sur les 15 dernières minutes — indique une tendance de fond, si élevé le serveur est structurellement sous pression",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 1,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "#EAB839",
+                "value": 2
+              },
+              {
+                "color": "red",
+                "value": 4
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 3,
+        "x": 21,
+        "y": 21
+      },
+      "id": 25,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.6.0",
+      "targets": [
+        {
+          "query": "from(bucket: \"Proxmox\")\r\n  |> range(start: -30m)\r\n  |> filter(fn: (r) => r._measurement == \"cpustat\")\r\n  |> filter(fn: (r) => r._field == \"avg15\")\r\n  |> filter(fn: (r) => r[\"host\"] == \"proxmox-alex-01\")\r\n  |> filter(fn: (r) => r[\"object\"] == \"nodes\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)",
+          "refId": "A"
+        }
+      ],
+      "title": "📈 Load 15 min",
+      "type": "stat"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 28
+      },
+      "id": 26,
+      "panels": [],
+      "title": "🌡️ Températures & S.M.A.R.T.e",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "ffnkjhfs5n8jkd"
+      },
+      "description": "Température de chaque cœur du processeur Intel i3-9100T",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "smooth",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "line"
+            }
+          },
+          "mappings": [],
+          "max": 90,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "#EAB839",
+                "value": 70
+              },
+              {
+                "color": "red",
+                "value": 85
+              }
+            ]
+          },
+          "unit": "celsius"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 13,
+        "w": 10,
+        "x": 0,
+        "y": 29
+      },
+      "id": 27,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.6.0",
+      "targets": [
+        {
+          "query": "from(bucket: \"Proxmox\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"temp\")\r\n  |> filter(fn: (r) => r[\"host\"] == \"proxmox-alex-01\")\r\n  |> filter(fn: (r) => r[\"sensor\"] == \"coretemp_core_0\" or r[\"sensor\"] == \"coretemp_core_1\" or r[\"sensor\"] == \"coretemp_core_2\" or r[\"sensor\"] == \"coretemp_core_3\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> drop(columns: [\"host\", \"name\"])",
+          "refId": "A"
+        }
+      ],
+      "title": "🌡️ Températures CPU",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "ffnkjhfs5n8jkd"
+      },
+      "description": "Température globale du package CPU",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "#EAB839",
+                "value": 70
+              },
+              {
+                "color": "red",
+                "value": 85
+              }
+            ]
+          },
+          "unit": "celsius"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 5,
+        "x": 10,
+        "y": 29
+      },
+      "id": 28,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.6.0",
+      "targets": [
+        {
+          "query": "from(bucket: \"Proxmox\")\r\n  |> range(start: -30m)\r\n  |> filter(fn: (r) => r._measurement == \"temp\")\r\n  |> filter(fn: (r) => r[\"host\"] == \"proxmox-alex-01\")\r\n  |> filter(fn: (r) => r[\"sensor\"] == \"coretemp_package_id_0\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)",
+          "refId": "A"
+        }
+      ],
+      "title": "🌡️ Temp CPU",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "ffnkjhfs5n8jkd"
+      },
+      "description": "Température du disque NVMe système",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 1,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "#EAB839",
+                "value": 60
+              },
+              {
+                "color": "red",
+                "value": 75
+              }
+            ]
+          },
+          "unit": "celsius"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 5,
+        "x": 15,
+        "y": 29
+      },
+      "id": 29,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.6.0",
+      "targets": [
+        {
+          "query": "from(bucket: \"Proxmox\")\r\n  |> range(start: -30m)\r\n  |> filter(fn: (r) => r._measurement == \"temp\")\r\n  |> filter(fn: (r) => r[\"host\"] == \"proxmox-alex-01\")\r\n  |> filter(fn: (r) => r[\"sensor\"] == \"nvme_composite\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)",
+          "refId": "A"
+        }
+      ],
+      "title": "💿 Temp NVMe",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "ffnkjhfs5n8jkd"
+      },
+      "description": "Usure physique du disque SSD SATA SK Hynix 128Go — à 100% le disque est en fin de vi",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "max": 98,
+          "min": 1,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "#EAB839",
+                "value": 70
+              },
+              {
+                "color": "red",
+                "value": 84.9999
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 4,
+        "x": 20,
+        "y": 29
+      },
+      "id": 30,
+      "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto"
+      },
+      "pluginVersion": "11.6.0",
+      "targets": [
+        {
+          "query": "from(bucket: \"Proxmox\")\r\n  |> range(start: -5m)\r\n  |> filter(fn: (r) => r._measurement == \"smart_device\")\r\n  |> filter(fn: (r) => r._field == \"media_wearout_indicator\")\r\n  |> filter(fn: (r) => r[\"device\"] == \"sda\")\r\n  |> last()\r\n  |> map(fn: (r) => ({r with _value: 100.0 - float(v: r._value)}))",
+          "refId": "A"
+        }
+      ],
+      "title": "💾 Usure SSD SATA",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "ffnkjhfs5n8jkd"
+      },
+      "description": "État de santé, température et usure des disques physiques",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "mappings": [
+            {
+              "options": {
+                "false": {
+                  "index": 1,
+                  "text": "🚨 DÉFAILLANT"
+                },
+                "nvme0n1": {
+                  "index": 2,
+                  "text": "💿 NVMe Système"
+                },
+                "sda": {
+                  "index": 3,
+                  "text": "💾 SSD SAT"
+                },
+                "sdb": {
+                  "index": 4,
+                  "text": "🔌 USB LaCie"
+                },
+                "true": {
+                  "index": 0,
+                  "text": "✅ OK"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "temperature"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "celsius"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green"
+                    },
+                    {
+                      "color": "#EAB839",
+                      "value": 70
+                    },
+                    {
+                      "color": "red",
+                      "value": 85
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text",
+                  "wrapText": false
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "heures"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "h"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "usure"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green"
+                    },
+                    {
+                      "color": "#EAB839",
+                      "value": 70
+                    },
+                    {
+                      "color": "red",
+                      "value": 85
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text",
+                  "wrapText": false
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 14,
+        "x": 10,
+        "y": 34
+      },
+      "id": 31,
+      "options": {
+        "cellHeight": "lg",
+        "footer": {
+          "countRows": false,
+          "enablePagination": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": true
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "11.6.0",
+      "targets": [
+        {
+          "query": "from(bucket: \"Proxmox\")\r\n  |> range(start: -5m)\r\n  |> filter(fn: (r) => r._measurement == \"smart_device\")\r\n  |> filter(fn: (r) => r._field == \"temp_c\" or r._field == \"power_on_hours\" or r._field == \"media_wearout_indicator\" or r._field == \"health_ok\" or r._field == \"wear_leveling_count\")\r\n  |> last()\r\n  |> pivot(rowKey: [\"_time\", \"device\"], columnKey: [\"_field\"], valueColumn: \"_value\")\r\n  |> map(fn: (r) => ({\r\n    disque: r.device,\r\n    sante: r.health_ok,\r\n    temperature: r.temp_c,\r\n    heures: r.power_on_hours,\r\n    usure: 100.0 - float(v: r.media_wearout_indicator),\r\n    wear_level: r.wear_leveling_count\r\n  }))",
+          "refId": "A"
+        }
+      ],
+      "title": "🏥 Santé des disques S.M.A.R.T.",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "includeByName": {},
+            "indexByName": {
+              "disque": 0,
+              "heures": 4,
+              "sante": 1,
+              "temperature": 2,
+              "usure": 3,
+              "wear_level": 5
+            },
+            "renameByName": {
+              "disque": "Disque",
+              "heures": "Fonctionnement",
+              "sante": "Santé",
+              "temperature": "Température",
+              "usure": "% Usure",
+              "wear_level": "Niveau d'usure"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 42
+      },
+      "id": 12,
+      "panels": [],
+      "title": "💽 Stockages",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "ffnkjhfs5n8jkd"
+      },
+      "description": "Utilisation des pools de stockage locaux du nœud Proxmox\nLOCAL : Stockage par défaut de Proxmox contient les ISO, backups, snippets\nLOCAL-LVM : Pool LVM-thin c'est là où sont stockés les disques des VMs conteneurs LXC\nLACIE :  Disque USB externe 500Go — monté comme stockage BDD InfluxDB",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 1,
+          "displayName": "${__field.labels.host} (${__field.labels.nodename})",
+          "mappings": [],
+          "max": 1,
+          "min": 0,
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "#EAB839",
+                "value": 75
+              },
+              {
+                "color": "red",
+                "value": 90
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 43
+      },
+      "id": 7,
+      "options": {
+        "displayMode": "gradient",
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "maxVizHeight": 300,
+        "minVizHeight": 10,
+        "minVizWidth": 0,
+        "namePlacement": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showUnfilled": true,
+        "sizing": "auto",
+        "text": {
+          "percentSize": 1,
+          "titleSize": 15
+        },
+        "valueMode": "color"
+      },
+      "pluginVersion": "11.6.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${dsProxmox}"
+          },
+          "hide": false,
+          "query": "from(bucket: \"Proxmox\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"system\")\n  |> filter(fn: (r) => r._field == \"total\" or r._field == \"used\")\n  |> filter(fn: (r) => \n    r[\"type\"] == \"zfspool\" \n    or r[\"type\"] == \"dir\" \n    or r[\"type\"] == \"lvm\" \n    or r[\"type\"] == \"lvmthin\"\n    or r[\"type\"] == \"btrfs\"\n  )\n  |> filter(fn: (r) => r[\"nodename\"] == \"proxmox-alex-01\")\n  |> last()\n  |> pivot(rowKey: [\"_time\"], columnKey: [\"_field\"], valueColumn: \"_value\")\n  |> map(fn: (r) => ({ r with \n    _field: \"used_perc\",\n    _value: float(v: r.used) / float(v: r.total)\n  }))\n  |> drop(columns: [\"total\", \"used\"])",
+          "refId": "A"
+        }
+      ],
+      "title": "💽 Stockages Proxmox",
+      "type": "bargauge"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "afno7qp4hokqoa"
+      },
+      "description": "Capacité, utilisation et espace libre de chaque pool de stockage du nœud Proxmox",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": false,
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "#EAB839",
+                "value": 70
+              },
+              {
+                "color": "red",
+                "value": 85
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "total"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "bytes"
+              },
+              {
+                "id": "decimals",
+                "value": 1
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "% Utilisation"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "decimals",
+                "value": 1
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "gradient",
+                  "type": "gauge",
+                  "valueDisplayMode": "color"
+                }
+              },
+              {
+                "id": "color",
+                "value": {
+                  "mode": "thresholds"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Espace Libre"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "bytes"
+              },
+              {
+                "id": "decimals",
+                "value": 1
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 43
+      },
+      "id": 8,
+      "options": {
+        "cellHeight": "lg",
+        "footer": {
+          "countRows": false,
+          "enablePagination": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": true
+        },
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "% Utilisation"
+          }
+        ]
+      },
+      "pluginVersion": "11.6.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "afno7qp4hokqoa"
+          },
+          "query": "from(bucket: \"Proxmox\")\r\n  |> range(start: -5m)\r\n  |> filter(fn: (r) => r._measurement == \"system\")\r\n  |> filter(fn: (r) => r._field == \"total\" or r._field == \"used\")\r\n  |> filter(fn: (r) => \r\n    r[\"type\"] == \"zfspool\" \r\n    or r[\"type\"] == \"dir\" \r\n    or r[\"type\"] == \"lvm\" \r\n    or r[\"type\"] == \"lvmthin\"\r\n    or r[\"type\"] == \"btrfs\"\r\n  )\r\n  |> filter(fn: (r) => r[\"nodename\"] == \"proxmox-alex-01\")\r\n  |> last()\r\n  |> pivot(rowKey: [\"_time\", \"host\"], columnKey: [\"_field\"], valueColumn: \"_value\")\r\n  |> map(fn: (r) => ({\r\n    stockage: r.host,\r\n    total: r.total,\r\n    utilisé: r.used,\r\n    pourcentage: float(v: r.used) / float(v: r.total) * 100.0\r\n  }))",
+          "refId": "A"
+        }
+      ],
+      "title": "💽 Stockages Proxmox",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "includeByName": {},
+            "indexByName": {
+              "pourcentage": 2,
+              "stockage": 0,
+              "total": 1,
+              "utilisé": 3
+            },
+            "renameByName": {
+              "pourcentage": "% Utilisation",
+              "stockage": "Stockage",
+              "total": "Capacité Total",
+              "utilisé": "Espace Libre"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "afno7qp4hokqoa"
+      },
+      "description": "Débit lecture/écriture des disques physiques en temps réel",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "smooth",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 2,
+            "pointSize": 4,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "always",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "binBps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 14,
+        "x": 0,
+        "y": 51
+      },
+      "id": 9,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "timezone": [
+          "Europe/Paris"
+        ],
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.6.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "afno7qp4hokqoa"
+          },
+          "query": "from(bucket: \"Proxmox\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"diskio\")\r\n  |> filter(fn: (r) => r._field == \"read_bytes\" or r._field == \"write_bytes\")\r\n  |> filter(fn: (r) => r[\"host\"] == \"proxmox-alex-01\")\r\n  |> filter(fn: (r) => r[\"name\"] == \"nvme0n1\" or r[\"name\"] == \"sda\" or r[\"name\"] == \"sdb\")\r\n  |> derivative(unit: 1s, nonNegative: true)\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean)\r\n  |> map(fn: (r) => ({r with _field: r.name + \" - \" + r._field}))\r\n  |> drop(columns: [\"host\", \"name\", \"wwid\", \"serial\"])",
+          "refId": "A"
+        }
+      ],
+      "title": "💿 I/O Disques",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "ffnkjhfs5n8jkd"
+      },
+      "description": "Évolution du temps CPU en attente des disques",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "smooth",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "#EAB839",
+                "value": 10
+              },
+              {
+                "color": "red",
+                "value": 25
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 10,
+        "x": 14,
+        "y": 51
+      },
+      "id": 20,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.6.0",
+      "targets": [
+        {
+          "query": "from(bucket: \"Proxmox\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"cpustat\")\r\n  |> filter(fn: (r) => r._field == \"wait\")\r\n  |> filter(fn: (r) => r[\"host\"] == \"proxmox-alex-01\")\r\n  |> filter(fn: (r) => r[\"object\"] == \"nodes\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> map(fn: (r) => ({r with _value: r._value * 100.0}))\r\n  |> drop(columns: [\"host\", \"object\", \"nodename\", \"_measurement\"])",
+          "refId": "A"
+        }
+      ],
+      "title": "⏳ I/O Wait — Historique",
+      "type": "timeseries"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 60
+      },
+      "id": 13,
+      "panels": [],
+      "title": "🌐 Réseau",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "ffnkjhfs5n8jkd"
+      },
+      "description": "Débit entrant/sortant de l'interface réseau principale\n📥 receive → les données qui entrent sur le serveur Proxmox (trafic entrant — quelqu'un accède à une VM, téléchargement, requêtes vers Jeedom/Grafana)\n📤 transmit → les données qui sortent de ton serveur (réponses aux requêtes, envoi de données)\n\nC'est le trafic physique réel qui passe par ta carte réseau enp1s0 — tout ce qui entre et sort de ta machine Proxmox vers le réseau local.\n",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "smooth",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "binBps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 24,
+        "x": 0,
+        "y": 61
+      },
+      "id": 10,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "timezone": [
+          "Europe/Paris"
+        ],
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.6.0",
+      "targets": [
+        {
+          "query": "from(bucket: \"Proxmox\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r._measurement == \"nics\")\r\n  |> filter(fn: (r) => r._field == \"receive\" or r._field == \"transmit\")\r\n  |> filter(fn: (r) => r[\"host\"] == \"proxmox-alex-01\")\r\n  |> filter(fn: (r) => r[\"instance\"] == \"enp1s0\")\r\n  |> derivative(unit: 1s, nonNegative: true)\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean)\r\n  |> drop(columns: [\"host\", \"instance\", \"object\"])\r\n  ",
+          "refId": "A"
+        }
+      ],
+      "title": "🌐 Réseau",
+      "type": "timeseries"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 71
+      },
+      "id": 14,
+      "panels": [],
+      "title": "🚀 Machines Virtuelles & Conteneurs",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "ffnkjhfs5n8jkd"
+      },
+      "description": "État des machines virtuelles et conteneurs LXC — CPU, RAM et disque alloués et utilisés",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "decimals": 1,
+          "mappings": [
+            {
+              "options": {
+                "lxc": {
+                  "index": 1,
+                  "text": "📦 Conteneur"
+                },
+                "qemu": {
+                  "index": 0,
+                  "text": "🖥️ Machine Virtuelle"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              },
+              {
+                "color": "#EAB839",
+                "value": 90
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "CPU"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Ram"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "% Utilisation Stockage"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Capacité Total"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "bytes"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Ram Total"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "bytes"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Uptime"
+            },
+            "properties": [
+              {
+                "id": "custom.align",
+                "value": "left"
+              },
+              {
+                "id": "unit",
+                "value": "dtdurations"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 24,
+        "x": 0,
+        "y": 72
+      },
+      "id": 11,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": true
+        },
+        "frameIndex": 0,
+        "showHeader": true
+      },
+      "pluginVersion": "11.6.0",
+      "targets": [
+        {
+          "query": "from(bucket: \"Proxmox\")\r\n  |> range(start: -5m)\r\n  |> filter(fn: (r) => r._measurement == \"system\")\r\n  |> filter(fn: (r) => r[\"object\"] == \"qemu\" or r[\"object\"] == \"lxc\")\r\n  |> filter(fn: (r) => r[\"nodename\"] == \"proxmox-alex-01\")\r\n  |> filter(fn: (r) => r._field == \"cpu\" or r._field == \"mem\" or r._field == \"maxmem\" or r._field == \"disk\" or r._field == \"maxdisk\" or r._field == \"uptime\")\r\n  |> last()\r\n  |> pivot(rowKey: [\"_time\", \"_measurement\", \"host\", \"object\", \"nodename\", \"vmid\"], columnKey: [\"_field\"], valueColumn: \"_value\")\r\n  |> map(fn: (r) => ({\r\n    nom: r.host,\r\n    type: r.object,\r\n    vmid: r.vmid,\r\n    uptime: r.uptime,\r\n    cpu: r.cpu * 100.0,\r\n    ram: r.mem / r.maxmem * 100.0,\r\n    ram_total: r.maxmem,\r\n    disque: r.disk / r.maxdisk * 100.0,\r\n    disque_total: r.maxdisk\r\n  }))",
+          "refId": "A"
+        }
+      ],
+      "title": "🖥️ VMs & Conteneurs LXC",
+      "transformations": [
+        {
+          "id": "merge",
+          "options": {}
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "includeByName": {},
+            "indexByName": {
+              "cpu": 3,
+              "disque": 7,
+              "disque_total": 5,
+              "nom": 0,
+              "ram": 4,
+              "ram_total": 6,
+              "type": 2,
+              "uptime": 1
+            },
+            "renameByName": {
+              "cpu": "CPU",
+              "disque": "% Utilisation Stockage",
+              "disque_total": "Capacité Total",
+              "nom": "Nom",
+              "ram": "Ram",
+              "ram_total": "Ram Total",
+              "type": "Type",
+              "uptime": "Uptime"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    }
+  ],
+  "preload": false,
+  "refresh": "30s",
+  "schemaVersion": 41,
+  "tags": [
+    "proxmox",
+    "monitoring",
+    "influxdb",
+    "grafana",
+    "homelab",
+    "lxc",
+    "vm",
+    "stockage",
+    "réseau",
+    "performance"
+  ],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-30m",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "Europe/Paris",
+  "title": "Monitoring Proxmox",
+  "uid": "afnr2lgx92h34b",
+  "version": 73,
+  "weekStart": "monday"
+}
